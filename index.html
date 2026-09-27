@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.7 • Stats</title>
+<title>MyAniDex V0.8 • Refonte UI</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -54,12 +54,48 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 .topStat img,.topStat .ph{width:46px;height:62px;object-fit:cover;border-radius:9px;background:#171d42;display:grid;place-items:center}
 @media(min-width:700px){.statsDash{grid-template-columns:repeat(4,1fr)}}
 
+
+/* === V0.8 Premium UI inspired by the approved MyAniDex mockup === */
+:root{--bg:#050816;--panel:#0a1024;--panel2:#0d1530;--line:#252d58;--text:#f7f7ff;--muted:#9099bd;--purple:#8b5cf6;--blue:#3b82f6;--cyan:#22d3ee;--pink:#d946ef}
+body{background:
+ radial-gradient(circle at 12% 4%,#5b21b633 0,transparent 25%),
+ radial-gradient(circle at 92% 7%,#0369a133 0,transparent 28%),
+ linear-gradient(180deg,#050816 0%,#030511 100%);color:var(--text)}
+header{background:linear-gradient(115deg,#100625 0%,#101d48 55%,#06364e 100%);border-bottom:0;padding-top:calc(18px + env(safe-area-inset-top))}
+.brand h1{font-size:34px;letter-spacing:-1.5px}.brand h1 span{background:linear-gradient(90deg,#d946ef,#8b5cf6,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.version{border-color:#4c3d86;background:#0a0d20aa;box-shadow:none}
+main{max-width:720px;padding:18px 16px 150px}
+.hero,.card,.statsSection{background:linear-gradient(145deg,#0d1430ee,#080d20ee);border:1px solid #273160;border-radius:17px;box-shadow:0 12px 35px #0004}
+.hero{padding:18px}.hero h2{font-size:23px;letter-spacing:-.5px}
+.toolbar{gap:9px}.search,input,select,textarea{background:#070b1c!important;border:1px solid #283365!important;border-radius:13px!important}
+.btn{border-radius:12px}.btn.primary{background:linear-gradient(90deg,#7c3aed,#3b82f6);box-shadow:0 7px 24px #5b21b644;border:0}
+.filters{gap:7px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}.filters .btn{white-space:nowrap;padding:9px 14px;border-radius:999px}
+.anime,.charCard{background:#0b1129!important;border:1px solid #252f5e!important;border-radius:15px!important;box-shadow:none!important}
+.anime{padding:10px!important;gap:10px!important}.cover{border-radius:9px!important}
+.score{font-weight:900;color:#fff}.meta,.sub{color:#9ca5c8}
+.detailHero{background:linear-gradient(145deg,#101938,#091026)!important;border-radius:18px!important;border:1px solid #2b376b!important}
+.statsDash{gap:9px}.statBig{border-radius:14px!important;background:#090f25!important;border-color:#293467!important;padding:13px!important}
+.statsSection{padding:14px!important}.statBar{background:#1a234b!important}.statBar>div{background:linear-gradient(90deg,#8b5cf6,#3b82f6,#22d3ee)!important}
+.topStat{background:#070c1d!important;border-color:#252f5c!important;border-radius:12px!important}
+.bottom{background:#050817f2!important;border-top:1px solid #252d58!important;backdrop-filter:blur(18px);padding:7px 10px calc(7px + env(safe-area-inset-bottom))!important}
+.nav{max-width:700px!important;grid-template-columns:repeat(4,1fr)!important;gap:2px!important}
+.nav button{border-radius:12px!important;padding:5px 2px 6px!important;font-size:10px!important;color:#858fb7!important}
+.nav button.on{background:transparent!important;border-color:transparent!important;box-shadow:none!important;color:#a78bfa!important}
+.nav button.on::after{left:30%!important;right:30%!important;height:2px!important;bottom:0!important}
+.navicon{width:25px!important;height:25px!important;filter:none!important}.nav button.on .navicon{filter:drop-shadow(0 0 7px #8b5cf6)!important}
+.sheet>div{background:#090f24!important;border:1px solid #313b70!important;border-radius:20px 20px 0 0!important}
+#statsView>.hero:nth-of-type(2),#statsView>.hero:nth-of-type(3){display:none}
+#statsView>.hero:last-child{margin-top:14px}
+#home .hero:first-child{position:relative;overflow:hidden}
+#home .hero:first-child:before{content:"";position:absolute;right:-60px;top:-70px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#8b5cf655,transparent 65%);pointer-events:none}
+@media(max-width:600px){.brand h1{font-size:32px}.hero h2{font-size:22px}.anime{grid-template-columns:28px 58px 1fr!important}.cover{width:58px!important;height:80px!important}}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.7 • Stats</span></header>
+<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.8 • Refonte UI</span></header>
 <main class="main">
-<section id="home" class="view on"><div class="hero"><h2>Bienvenue dans ton AniDex ✨</h2><div class="sub">Recherche automatique, jaquettes, progression S/E et navigation anime.</div><div class="stats" id="homeStats"></div></div><h3>🏆 Ton Top 5</h3><div id="top5" class="list"></div></section>
+<section id="home" class="view on"><div class="hero"><h2>Ton univers anime ✨</h2><div class="sub">Retrouve ta collection, tes personnages, tes classements et tes statistiques.</div><div class="stats" id="homeStats"></div></div><h3>🏆 Ton Top 5</h3><div id="top5" class="list"></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search" placeholder="🔎 Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="sub">↑ ↓ changent ton classement. Touche une fiche pour la modifier.</div><div id="animeList" class="list"></div></section>
 <section id="animeDetail" class="view"><button id="backAnime" class="btn backBtn">← Retour aux animés</button><div id="animeDetailContent"></div></section>
 <section id="charView" class="view"><div class="toolbar"><input id="charSearch" class="search" placeholder="🔎 Rechercher un personnage"><button id="newChar" class="btn primary">＋ Ajouter</button></div><div class="sub">↑ ↓ changent ton classement des personnages. Touche une fiche pour l’ouvrir.</div><div id="charList"></div></section><section id="charDetail" class="view"><button id="backChar" class="btn backBtn">← Retour aux personnages</button><div id="charDetailContent"></div></section>
@@ -72,9 +108,9 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 <button data-view="animeView" aria-label="Animés">
 <svg class="navicon" viewBox="0 0 32 32" fill="none"><rect x="4" y="7" width="24" height="18" rx="5" stroke-width="2.2"/><path d="M14 12l7 4-7 4z" stroke-width="2" stroke-linejoin="round"/><path d="M10 4l3 3M22 4l-3 3" stroke-width="1.8" stroke-linecap="round"/></svg>Animés</button>
 <button data-view="charView" aria-label="Personnages">
-<svg class="navicon" viewBox="0 0 32 32" fill="none"><path d="M8 27c1-6 4-9 8-9s7 3 8 9" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="11" r="5" stroke-width="2.2"/><path d="M5 16c3-2 5-5 5-9M27 16c-3-2-5-5-5-9" stroke-width="1.5" opacity=".65"/></svg>Persos</button>
+<svg class="navicon" viewBox="0 0 32 32" fill="none"><path d="M8 27c1-6 4-9 8-9s7 3 8 9" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="11" r="5" stroke-width="2.2"/><path d="M5 16c3-2 5-5 5-9M27 16c-3-2-5-5-5-9" stroke-width="1.5" opacity=".65"/></svg>Personnages</button>
 <button data-view="statsView" aria-label="Statistiques">
-<svg class="navicon" viewBox="0 0 32 32" fill="none"><path d="M5 27V16h5v11M14 27V9h5v18M23 27V4h5v23" stroke-width="2.2" stroke-linejoin="round"/><path d="M4 27h25" stroke-width="1.5"/></svg>Stats</button>
+<svg class="navicon" viewBox="0 0 32 32" fill="none"><path d="M5 27V16h5v11M14 27V9h5v18M23 27V4h5v23" stroke-width="2.2" stroke-linejoin="round"/><path d="M4 27h25" stroke-width="1.5"/></svg>Statistiques</button>
 </div></nav>
 
 <div id="animeSheet" class="sheet"><div class="modal"><h3 id="animeFormTitle">Ajouter un animé</h3><form id="animeForm" class="form">
@@ -340,7 +376,7 @@ $('#charForm').onsubmit=e=>{e.preventDefault();let id=Number($('#cid').value),ol
 $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Supprimer cet animé ?')){anime=anime.filter(a=>a.id!==id);save();$('#animeSheet').classList.remove('show');render()}};$('#deleteChar').onclick=()=>{let id=Number($('#cid').value);if(id&&confirm('Supprimer ce personnage ?')){chars=chars.filter(c=>c.id!==id);save();$('#charSheet').classList.remove('show');render()}};
 $('#backAnime').onclick=()=>setView('animeView');$('#backChar').onclick=()=>setView('charView');$('#newAnime').onclick=()=>openAnime();$('#newChar').onclick=()=>openChar();$('#cancelAnime').onclick=()=>$('#animeSheet').classList.remove('show');$('#cancelChar').onclick=()=>$('#charSheet').classList.remove('show');$('#search').oninput=renderAnime;$('#charSearch').oninput=renderChars;
 $$('.nav button').forEach(b=>b.onclick=()=>{setView(b.dataset.view);render()});
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.7',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.7.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.8',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.8.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 render();
 </script>
 </body></html>
