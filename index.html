@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.6 • Arc Personnages</title>
+<title>MyAniDex V0.6.1 • Persos Boost</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -38,10 +38,15 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 .charHeroImg{width:120px;height:165px;object-fit:cover;border-radius:16px;border:1px solid #6c63b8;background:#11162f}
 @media(max-width:600px){.criteriaGrid{grid-template-columns:1fr}.charcard.v06{grid-template-columns:28px 54px 1fr}.charcard.v06>div:last-child{grid-column:3}}
 
+
+.rangeWrap{display:grid;grid-template-columns:1fr 48px;gap:10px;align-items:center}
+.range{width:100%;accent-color:#8b5cf6}
+.rangeVal{height:40px;display:grid;place-items:center;border:1px solid #3b4381;border-radius:12px;background:#10152f;font-weight:950}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.6 • Arc Personnages</span></header>
+<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.6.1 • Persos Boost</span></header>
 <main class="main">
 <section id="home" class="view on"><div class="hero"><h2>Bienvenue dans ton AniDex ✨</h2><div class="sub">Recherche automatique, jaquettes, progression S/E et navigation anime.</div><div class="stats" id="homeStats"></div></div><h3>🏆 Ton Top 5</h3><div id="top5" class="list"></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search" placeholder="🔎 Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="sub">↑ ↓ changent ton classement. Touche une fiche pour la modifier.</div><div id="animeList" class="list"></div></section>
@@ -101,16 +106,16 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 </div>
 <h3 style="margin:12px 0 0">⚡ Tes critères</h3>
 <div class="row">
-<div><label class="formLabel" for="caffection">💜 Affection /10</label><input id="caffection" class="field" type="number" min="0" max="10" step="1" value="0"></div>
-<div><label class="formLabel" for="ccharisma">✨ Charisme /10</label><input id="ccharisma" class="field" type="number" min="0" max="10" step="1" value="0"></div>
+<div><label class="formLabel" for="caffection">💜 Affection /10</label><div class="rangeWrap"><input id="caffection" class="range" type="range" min="0" max="10" step="1" value="0"><output id="caffectionVal" class="rangeVal">0</output></div></div>
+<div><label class="formLabel" for="ccharisma">✨ Charisme /10</label><div class="rangeWrap"><input id="ccharisma" class="range" type="range" min="0" max="10" step="1" value="0"><output id="ccharismaVal" class="rangeVal">0</output></div></div>
 </div>
 <div class="row">
-<div><label class="formLabel" for="cbadass">⚔️ Badass /10</label><input id="cbadass" class="field" type="number" min="0" max="10" step="1" value="0"></div>
-<div><label class="formLabel" for="chumor">😂 Humour /10</label><input id="chumor" class="field" type="number" min="0" max="10" step="1" value="0"></div>
+<div><label class="formLabel" for="cbadass">⚔️ Badass /10</label><div class="rangeWrap"><input id="cbadass" class="range" type="range" min="0" max="10" step="1" value="0"><output id="cbadassVal" class="rangeVal">0</output></div></div>
+<div><label class="formLabel" for="chumor">😂 Humour /10</label><div class="rangeWrap"><input id="chumor" class="range" type="range" min="0" max="10" step="1" value="0"><output id="chumorVal" class="rangeVal">0</output></div></div>
 </div>
 <div class="row">
-<div><label class="formLabel" for="cintelligence">🧠 Intelligence /10</label><input id="cintelligence" class="field" type="number" min="0" max="10" step="1" value="0"></div>
-<div><label class="formLabel" for="cdesign">🎨 Design /10</label><input id="cdesign" class="field" type="number" min="0" max="10" step="1" value="0"></div>
+<div><label class="formLabel" for="cintelligence">🧠 Intelligence /10</label><div class="rangeWrap"><input id="cintelligence" class="range" type="range" min="0" max="10" step="1" value="0"><output id="cintelligenceVal" class="rangeVal">0</output></div></div>
+<div><label class="formLabel" for="cdesign">🎨 Design /10</label><div class="rangeWrap"><input id="cdesign" class="range" type="range" min="0" max="10" step="1" value="0"><output id="cdesignVal" class="rangeVal">0</output></div></div>
 </div>
 <label class="formLabel" for="cnote">💭 Ton avis personnel</label><textarea id="cnote" class="field" placeholder="Pourquoi tu l’aimes…" style="min-height:80px"></textarea>
 <label class="check"><input id="cfav" type="checkbox"> ❤️ Ajouter aux favoris</label>
@@ -223,7 +228,7 @@ function updateProgressFields(){const show=$('#astatus').value==='En cours';$('#
 
 function openAnime(a={}){$('#aid').value=a.id||'';$('#amalid').value=a.malId||'';$('#aimage').value=a.image||'';$('#aname').value=a.name||'';$('#ascore').value=a.score??'';$('#astatus').value=a.status||'Vu';$('#atier').value=a.tier||'';$('#aseasons').value=a.seasons??1;$('#aepisodes').value=a.episodes??'';$('#arewatch').value=a.rewatches??'';$('#aseason').value=a.season??1;$('#acurrentep').value=a.currentEp??0;$('#aseasoneps').value=a.seasonEpisodes??'';$('#agenre').value=a.genre||'';$('#ayear').value=a.year??'';$('#asynopsis').value=a.synopsis||'';$('#anote').value=a.note||'';$('#afav').checked=!!a.fav;preview($('#animePreview'),a.image);$('#deleteAnime').style.display=a.id?'inline-block':'none';$('#animeSuggestions').classList.remove('show');updateProgressFields();$('#animeSheet').classList.add('show')}
 window.editAnime=id=>openAnime(anime.find(a=>a.id===id));
-function openChar(c={}){$('#cid').value=c.id||'';$('#cimage').value=c.image||'';$('#cname').value=c.name||'';$('#canime').value=c.anime||'';$('#cscore').value=c.score??'';$('#ctier').value=c.tier||'';$('#caffection').value=c.affection??0;$('#ccharisma').value=c.charisma??0;$('#cbadass').value=c.badass??0;$('#chumor').value=c.humor??0;$('#cintelligence').value=c.intelligence??0;$('#cdesign').value=c.design??0;$('#cnote').value=c.note||'';$('#cfav').checked=!!c.fav;preview($('#charPreview'),c.image);$('#deleteChar').style.display=c.id?'inline-block':'none';$('#charSuggestions').classList.remove('show');$('#charSheet').classList.add('show')}window.editChar=id=>openChar(chars.find(c=>c.id===id));
+function openChar(c={}){$('#cid').value=c.id||'';$('#cimage').value=c.image||'';$('#cname').value=c.name||'';$('#canime').value=c.anime||'';$('#cscore').value=c.score??'';$('#ctier').value=c.tier||'';$('#caffection').value=c.affection??0;$('#ccharisma').value=c.charisma??0;$('#cbadass').value=c.badass??0;$('#chumor').value=c.humor??0;$('#cintelligence').value=c.intelligence??0;$('#cdesign').value=c.design??0;$('#cnote').value=c.note||'';$('#cfav').checked=!!c.fav;preview($('#charPreview'),c.image);['caffection','ccharisma','cbadass','chumor','cintelligence','cdesign'].forEach(id=>{const o=$('#'+id+'Val');if(o)o.textContent=$('#'+id).value});$('#deleteChar').style.display=c.id?'inline-block':'none';$('#charSuggestions').classList.remove('show');$('#charSheet').classList.add('show')}window.editChar=id=>openChar(chars.find(c=>c.id===id));
 
 async function frenchSynopsisFor(title, fallback=''){
   try{
@@ -264,11 +269,51 @@ function selectAnime(x){
   $('#asynopsis').value=stripHtml(x.description||''); preview($('#animePreview'),$('#aimage').value);
   $('#animeSuggestions').classList.remove('show'); toast('Infos AniList récupérées ✨')
 }
-async function searchChar(q){if(q.length<3){$('#charSuggestions').classList.remove('show');return}const box=$('#charSuggestions');box.innerHTML='<div class="suggestion"><div>🔎</div><div><b>Recherche…</b><small>Personnages anime</small></div></div>';box.classList.add('show');try{let r=await fetch('https://api.jikan.moe/v4/characters?q='+encodeURIComponent(q)+'&limit=8');let d=await r.json();box.innerHTML=(d.data||[]).map((x,i)=>`<div class="suggestion" data-i="${i}"><img src="${x.images?.jpg?.image_url||''}"><div><b>${esc(x.name)}</b><small>${esc((x.name_kanji||'Personnage'))}</small></div></div>`).join('');box.classList.toggle('show',!!d.data?.length);$$('#charSuggestions .suggestion[data-i]').forEach((el,i)=>el.onclick=async()=>{let x=d.data[i];$('#cname').value=x.name||'';$('#cimage').value=x.images?.jpg?.image_url||'';preview($('#charPreview'),$('#cimage').value);box.classList.remove('show');try{let rr=await fetch('https://api.jikan.moe/v4/characters/'+x.mal_id+'/anime');let dd=await rr.json();let animeName=dd.data?.[0]?.anime?.title||'';if(animeName)$('#canime').value=animeName}catch(e){}toast('Portrait récupéré ✨')})}catch(e){box.innerHTML='<div class="suggestion"><div>⚠️</div><div><b>Recherche indisponible</b><small>Tu peux remplir la fiche manuellement.</small></div></div>'}}
+async function searchChar(q){
+  const box=$('#charSuggestions');
+  if(q.trim().length<2){box.classList.remove('show');return}
+  box.innerHTML='<div class="suggestion"><div style="font-size:22px">🔎</div><div><b>Recherche…</b><small>Recherche du personnage</small></div></div>';
+  box.classList.add('show');
+  try{
+    const query=`query ($search:String){Page(page:1,perPage:8){characters(search:$search,sort:SEARCH_MATCH){id name{full native} image{large medium} media(perPage:8,type:ANIME,sort:POPULARITY_DESC){nodes{title{english romaji}format}}}}}`;
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9000);
+    const r=await fetch('https://graphql.anilist.co',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({query,variables:{search:q.trim()}}),
+      signal:controller.signal
+    });
+    clearTimeout(timer);
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const d=await r.json(),rows=d?.data?.Page?.characters||[];
+    if(!rows.length){
+      box.innerHTML='<div class="suggestion"><div style="font-size:22px">🤔</div><div><b>Aucun résultat</b><small>Essaie le nom complet ou une autre orthographe.</small></div></div>';
+      return;
+    }
+    box.innerHTML=rows.map((x,i)=>{
+      const anime=(x.media?.nodes||[])[0];
+      const animeName=anime?.title?.english||anime?.title?.romaji||'Animé à préciser';
+      return `<div class="suggestion" data-i="${i}"><img src="${x.image?.medium||x.image?.large||''}"><div><b>${esc(x.name?.full||'Sans nom')}</b><small>${esc(animeName)}</small></div></div>`
+    }).join('');
+    $$('#charSuggestions .suggestion[data-i]').forEach((el,i)=>el.onclick=()=>{
+      const x=rows[i],anime=(x.media?.nodes||[])[0];
+      $('#cname').value=x.name?.full||'';
+      $('#cimage').value=x.image?.large||x.image?.medium||'';
+      $('#canime').value=anime?.title?.english||anime?.title?.romaji||'';
+      preview($('#charPreview'),$('#cimage').value);
+      box.classList.remove('show');
+      toast('Personnage récupéré ⚡');
+    });
+  }catch(e){
+    console.log('Character search error',e);
+    box.innerHTML='<div class="suggestion"><div style="font-size:22px">⚠️</div><div><b>Recherche indisponible</b><small>Tu peux toujours remplir la fiche manuellement.</small></div></div>';
+  }
+}
 function fileToSmallDataURL(file,cb){let r=new FileReader();r.onload=()=>{let img=new Image();img.onload=()=>{let max=600,scale=Math.min(1,max/img.width,max/img.height),c=document.createElement('canvas');c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.78))};img.src=r.result};r.readAsDataURL(file)}
-$('#aname').addEventListener('input',()=>{clearTimeout(animeTimer);animeTimer=setTimeout(()=>searchAnime($('#aname').value.trim()),450)});$('#cname').addEventListener('input',()=>{clearTimeout(charTimer);charTimer=setTimeout(()=>searchChar($('#cname').value.trim()),450)});
+$('#aname').addEventListener('input',()=>{clearTimeout(animeTimer);animeTimer=setTimeout(()=>searchAnime($('#aname').value.trim()),450)});$('#cname').addEventListener('input',()=>{clearTimeout(charTimer);charTimer=setTimeout(()=>searchChar($('#cname').value.trim()),300)});
 $('#chooseAnimeImage').onclick=()=>$('#animeImageFile').click();$('#animeImageFile').onchange=e=>{let f=e.target.files[0];if(f)fileToSmallDataURL(f,u=>{$('#aimage').value=u;preview($('#animePreview'),u)})};$('#chooseCharImage').onclick=()=>$('#charImageFile').click();$('#charImageFile').onchange=e=>{let f=e.target.files[0];if(f)fileToSmallDataURL(f,u=>{$('#cimage').value=u;preview($('#charPreview'),u)})};
 $('#astatus').onchange=updateProgressFields;
+['caffection','ccharisma','cbadass','chumor','cintelligence','cdesign'].forEach(id=>{const el=$('#'+id),out=$('#'+id+'Val');if(el&&out){const sync=()=>out.textContent=el.value;el.addEventListener('input',sync);sync()}});
 
 
 $('#animeForm').onsubmit=e=>{e.preventDefault();let id=Number($('#aid').value),_old=anime.find(a=>a.id===id)||{},obj={..._old,id:id||Date.now(),malId:Number($('#amalid').value)||_old.malId||null,image:$('#aimage').value||_old.image||'',name:$('#aname').value.trim(),score:Number($('#ascore').value)||0,status:$('#astatus').value,tier:$('#atier').value||_old.tier||'',seasons:Number($('#aseasons').value)||_old.seasons||1,episodes:Number($('#aepisodes').value)||0,rewatches:Number($('#arewatch').value)||0,season:Number($('#aseason').value)||1,currentEp:Number($('#acurrentep').value)||0,seasonEpisodes:Number($('#aseasoneps').value)||0,genre:$('#agenre').value.trim(),year:Number($('#ayear').value)||null,synopsis:$('#asynopsis').value.trim(),synopsisOriginal:_old.synopsisOriginal||($('#asynopsis').value.trim()!=='Synopsis français indisponible pour le moment.'?$('#asynopsis').value.trim():''),note:$('#anote').value.trim(),fav:$('#afav').checked};if(id){let ix=anime.findIndex(a=>a.id===id);if(ix>=0)anime[ix]=obj;else anime.push(obj)}else anime.push(obj);save();$('#animeSheet').classList.remove('show');render();toast('Animé enregistré ✨')};
@@ -276,7 +321,7 @@ $('#charForm').onsubmit=e=>{e.preventDefault();let id=Number($('#cid').value),ol
 $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Supprimer cet animé ?')){anime=anime.filter(a=>a.id!==id);save();$('#animeSheet').classList.remove('show');render()}};$('#deleteChar').onclick=()=>{let id=Number($('#cid').value);if(id&&confirm('Supprimer ce personnage ?')){chars=chars.filter(c=>c.id!==id);save();$('#charSheet').classList.remove('show');render()}};
 $('#backAnime').onclick=()=>setView('animeView');$('#backChar').onclick=()=>setView('charView');$('#newAnime').onclick=()=>openAnime();$('#newChar').onclick=()=>openChar();$('#cancelAnime').onclick=()=>$('#animeSheet').classList.remove('show');$('#cancelChar').onclick=()=>$('#charSheet').classList.remove('show');$('#search').oninput=renderAnime;$('#charSearch').oninput=renderChars;
 $$('.nav button').forEach(b=>b.onclick=()=>{setView(b.dataset.view);render()});
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.6',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.6.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.6.1',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.6.1.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 render();
 </script>
 </body></html>
