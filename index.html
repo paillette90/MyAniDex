@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.5.4 • Boss Animés</title>
+<title>MyAniDex V0.5.5 • Synopsis sécurisé</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -29,7 +29,7 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.5.4 • Boss Animés</span></header>
+<header class="top"><div class="brand">🎌 <span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.5.5 • Synopsis sécurisé</span></header>
 <main class="main">
 <section id="home" class="view on"><div class="hero"><h2>Bienvenue dans ton AniDex ✨</h2><div class="sub">Recherche automatique, jaquettes, progression S/E et navigation anime.</div><div class="stats" id="homeStats"></div></div><h3>🏆 Ton Top 5</h3><div id="top5" class="list"></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search" placeholder="🔎 Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="sub">↑ ↓ changent ton classement. Touche une fiche pour la modifier.</div><div id="animeList" class="list"></div></section>
@@ -133,19 +133,54 @@ async function translateInlineFR(text){
 }
 window.refreshFrenchSynopsis=async id=>{
   const a=anime.find(x=>x.id===id); if(!a)return;
-  const old=a.synopsis||'';
+  const unavailable='Synopsis français indisponible pour le moment.';
+  let original=String(a.synopsisOriginal||a.synopsis||'').trim();
+
+  // Repair the bad placeholder saved by V0.5.4 when possible.
+  if(String(a.synopsis||'').trim()===unavailable){
+    if(a.synopsisOriginal){
+      a.synopsis=a.synopsisOriginal;
+      original=a.synopsisOriginal;
+      save(); render(); showAnimeDetail(id);
+    }else{
+      try{
+        const r=await fetch('https://graphql.anilist.co',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({
+            query:`query ($search:String){Page(page:1,perPage:5){media(search:$search,type:ANIME,sort:SEARCH_MATCH){title{romaji english}description(asHtml:false)}}}`,
+            variables:{search:a.name}
+          })
+        });
+        if(r.ok){
+          const d=await r.json();
+          const hit=d?.data?.Page?.media?.[0];
+          const recovered=stripHtml(hit?.description||'').trim();
+          if(recovered){a.synopsis=recovered;a.synopsisOriginal=recovered;original=recovered;save()}
+        }
+      }catch(e){}
+    }
+  }
+
+  if(!original || original===unavailable){
+    alert("Aucun synopsis original n’est disponible à traduire. Ouvre « Modifier la fiche » pour en ajouter un.");
+    return;
+  }
+
   try{
     toast('Traduction en français… 🇫🇷');
-    let fr=await frenchSynopsisFor(a.name,'');
-    if(!fr || fr===old) fr=await translateInlineFR(old);
-    if(fr){
-      a.synopsis=fr;
-      a.synopsisTranslated=true;
-      save(); render(); showAnimeDetail(id);
-      toast('Synopsis traduit dans MyAniDex 🇫🇷');
-    } else alert("Impossible de traduire le synopsis pour le moment.");
+    const fr=await translateInlineFR(original);
+    if(!fr || fr.trim()===original.trim()) throw new Error('no translation');
+    if(!a.synopsisOriginal) a.synopsisOriginal=original;
+    a.synopsis=fr.trim();
+    a.synopsisTranslated=true;
+    save(); render(); showAnimeDetail(id);
+    toast('Synopsis traduit dans MyAniDex 🇫🇷');
   }catch(e){
-    alert("La traduction n’est pas disponible pour le moment. Ton synopsis actuel est conservé.");
+    // Absolute rule: a failed translation must never overwrite the synopsis.
+    if(a.synopsisOriginal && (!a.synopsis || a.synopsis===unavailable)) a.synopsis=a.synopsisOriginal;
+    save(); render(); showAnimeDetail(id);
+    alert("La traduction n’est pas disponible pour le moment. Le synopsis original a été conservé.");
   }
 };
 window.showAnimeDetail=id=>{const a=anime.find(x=>x.id===id);if(!a)return;let denom=Number(a.seasonEpisodes||a.episodes||0),pct=denom?Math.min(100,Math.round((Number(a.currentEp||0)/denom)*100)):0;$('#animeDetailContent').innerHTML=`<div class="detailHero">${a.image?`<div class="detailBg" style="background-image:url('${esc(a.image)}')"></div>`:''}<div class="detailShade"></div><div class="detailContent">${a.image?`<img class="detailCover" src="${esc(a.image)}">`:`<div class="detailCover" style="display:grid;place-items:center;font-size:44px">🎌</div>`}<div><div class="detailTitle">${esc(a.name)}</div><div class="detailBadges"><span class="badge">⭐ ${Number(a.score||0).toFixed(1)}/10</span>${tierBadge(a)}<span class="badge">${esc(a.status)}</span>${a.fav?'<span class="badge">❤️ Favori</span>':''}</div></div></div></div><div class="detailGrid"><div class="detailBox"><b>#${anime.indexOf(a)+1}</b><small>Classement</small></div><div class="detailBox"><b>${a.seasons||1}</b><small>Saison${Number(a.seasons||1)>1?'s':''}</small></div><div class="detailBox"><b>${a.episodes||'—'}</b><small>Épisodes</small></div></div>${a.status==='En cours'?`<div class="detailSection"><h3>⚡ Progression</h3><div class="seasonCard"><div class="seasonLine"><b>Saison ${a.season||1}</b><span>Épisode ${a.currentEp||0}${denom?' / '+denom:''}</span></div>${denom?`<div class="progress"><div style="width:${pct}%"></div></div><div class="meta">${pct}% terminé</div>`:''}<div class="actions"><button class="btn" onclick="minusEp(${a.id});showAnimeDetail(${a.id})">− Épisode</button><button class="btn primary" onclick="plusEp(${a.id});showAnimeDetail(${a.id})">+ Épisode</button></div></div></div>`:''}<div class="detailSection"><h3>🎴 Informations</h3><div class="detailText">${a.year?'📅 '+a.year+' · ':''}${a.genre?'🏷️ '+esc(frenchGenres(a.genre)):''}</div></div>${a.synopsis?`<div class="detailSection"><h3>📖 Synopsis</h3><div class="detailText">${esc(a.synopsis)}</div><div class="actions"><button class="mini" onclick="refreshFrenchSynopsis(${a.id})">🇫🇷 Synopsis français / traduction</button></div></div>`:''}${a.note?`<div class="detailSection"><h3>💜 Mon avis</h3><div class="detailText">${esc(a.note)}</div></div>`:''}<div class="detailSection"><h3>🔁 Revisionnages</h3><div class="watchControl"><button class="btn" onclick="minusWatch(${a.id});showAnimeDetail(${a.id})">−</button><div class="watchCount">${a.rewatches||0}×<small>nombre de visionnages</small></div><button class="btn primary" onclick="plusWatch(${a.id});showAnimeDetail(${a.id})">+</button></div></div><div class="detailActions"><button class="btn primary" style="grid-column:1/-1" onclick="editAnime(${a.id})">✏️ Modifier la fiche</button></div>`;setView('animeDetail')}
@@ -168,7 +203,7 @@ async function frenchSynopsisFor(title, fallback=''){
     const looksFR=/\b(le|la|les|un|une|des|dans|avec|pour|qui|est|sont|son|sa|ses|mais|sur)\b/i.test(syn);
     if(looksFR) return syn;
   }catch(e){}
-  return fallback||'Synopsis français indisponible pour le moment.';
+  return fallback||'';
 }
 async function searchAnime(q){
   const box=$('#animeSuggestions');
@@ -202,12 +237,12 @@ $('#chooseAnimeImage').onclick=()=>$('#animeImageFile').click();$('#animeImageFi
 $('#astatus').onchange=updateProgressFields;
 
 
-$('#animeForm').onsubmit=e=>{e.preventDefault();let id=Number($('#aid').value),_old=anime.find(a=>a.id===id)||{},obj={..._old,id:id||Date.now(),malId:Number($('#amalid').value)||_old.malId||null,image:$('#aimage').value||_old.image||'',name:$('#aname').value.trim(),score:Number($('#ascore').value)||0,status:$('#astatus').value,tier:$('#atier').value||_old.tier||'',seasons:Number($('#aseasons').value)||_old.seasons||1,episodes:Number($('#aepisodes').value)||0,rewatches:Number($('#arewatch').value)||0,season:Number($('#aseason').value)||1,currentEp:Number($('#acurrentep').value)||0,seasonEpisodes:Number($('#aseasoneps').value)||0,genre:$('#agenre').value.trim(),year:Number($('#ayear').value)||null,synopsis:$('#asynopsis').value.trim(),note:$('#anote').value.trim(),fav:$('#afav').checked};if(id){let ix=anime.findIndex(a=>a.id===id);if(ix>=0)anime[ix]=obj;else anime.push(obj)}else anime.push(obj);save();$('#animeSheet').classList.remove('show');render();toast('Animé enregistré ✨')};
+$('#animeForm').onsubmit=e=>{e.preventDefault();let id=Number($('#aid').value),_old=anime.find(a=>a.id===id)||{},obj={..._old,id:id||Date.now(),malId:Number($('#amalid').value)||_old.malId||null,image:$('#aimage').value||_old.image||'',name:$('#aname').value.trim(),score:Number($('#ascore').value)||0,status:$('#astatus').value,tier:$('#atier').value||_old.tier||'',seasons:Number($('#aseasons').value)||_old.seasons||1,episodes:Number($('#aepisodes').value)||0,rewatches:Number($('#arewatch').value)||0,season:Number($('#aseason').value)||1,currentEp:Number($('#acurrentep').value)||0,seasonEpisodes:Number($('#aseasoneps').value)||0,genre:$('#agenre').value.trim(),year:Number($('#ayear').value)||null,synopsis:$('#asynopsis').value.trim(),synopsisOriginal:_old.synopsisOriginal||($('#asynopsis').value.trim()!=='Synopsis français indisponible pour le moment.'?$('#asynopsis').value.trim():''),note:$('#anote').value.trim(),fav:$('#afav').checked};if(id){let ix=anime.findIndex(a=>a.id===id);if(ix>=0)anime[ix]=obj;else anime.push(obj)}else anime.push(obj);save();$('#animeSheet').classList.remove('show');render();toast('Animé enregistré ✨')};
 $('#charForm').onsubmit=e=>{e.preventDefault();let id=Number($('#cid').value),obj={id:id||Date.now(),image:$('#cimage').value,name:$('#cname').value.trim(),anime:$('#canime').value.trim(),score:Number($('#cscore').value)||0,note:$('#cnote').value.trim(),fav:$('#cfav').checked};if(id)chars[chars.findIndex(c=>c.id===id)]=obj;else chars.push(obj);save();$('#charSheet').classList.remove('show');render();toast('Personnage enregistré ✨')};
 $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Supprimer cet animé ?')){anime=anime.filter(a=>a.id!==id);save();$('#animeSheet').classList.remove('show');render()}};$('#deleteChar').onclick=()=>{let id=Number($('#cid').value);if(id&&confirm('Supprimer ce personnage ?')){chars=chars.filter(c=>c.id!==id);save();$('#charSheet').classList.remove('show');render()}};
 $('#backAnime').onclick=()=>setView('animeView');$('#newAnime').onclick=()=>openAnime();$('#newChar').onclick=()=>openChar();$('#cancelAnime').onclick=()=>$('#animeSheet').classList.remove('show');$('#cancelChar').onclick=()=>$('#charSheet').classList.remove('show');$('#search').oninput=renderAnime;$('#charSearch').oninput=renderChars;
 $$('.nav button').forEach(b=>b.onclick=()=>{setView(b.dataset.view);render()});
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.5.4',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.5.4.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.5.5',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.5.5.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 render();
 </script>
 </body></html>
