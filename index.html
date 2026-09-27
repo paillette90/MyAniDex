@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.4</title>
+<title>MyAniDex V0.4.1 • Fiches anime corrigées</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -41,6 +41,21 @@ button,input,select,textarea{font:inherit}button{touch-action:manipulation}.top{
 <svg class="navicon" viewBox="0 0 32 32" fill="none"><path d="M5 27V16h5v11M14 27V9h5v18M23 27V4h5v23" stroke-width="2.2" stroke-linejoin="round"/><path d="M4 27h25" stroke-width="1.5"/></svg>Stats</button>
 </div></nav>
 
+<div id="detailSheet" class="sheet"><div class="modal" style="padding:0;overflow:auto">
+<div id="detailHero" style="min-height:220px;background-size:cover;background-position:center;position:relative">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,#05071333,#0d1128 95%)"></div>
+  <button id="closeDetail" class="btn" style="position:absolute;top:14px;left:14px;z-index:2">← Retour</button>
+</div>
+<div style="padding:0 18px 24px;margin-top:-62px;position:relative">
+  <div style="display:flex;gap:14px;align-items:flex-end">
+    <img id="detailCover" style="width:112px;height:158px;object-fit:cover;border-radius:16px;border:2px solid #6052a8;background:#151936;box-shadow:0 12px 30px #0008">
+    <div style="padding-bottom:8px"><h2 id="detailTitle" style="margin:0 0 7px"></h2><div id="detailBadges" class="meta"></div></div>
+  </div>
+  <div id="detailProgressWrap" style="display:none;margin-top:16px"><div id="detailProgressLabel" class="meta"></div><div class="progress"><div id="detailProgressBar"></div></div><div class="actions"><button id="detailMinusEp" class="mini">− Épisode</button><button id="detailPlusEp" class="mini">+ Épisode</button></div></div>
+  <div class="hero" style="margin-top:16px"><h3 style="margin-top:0">📖 Synopsis</h3><div id="detailSynopsis" class="note"></div></div>
+  <div class="hero"><h3 style="margin-top:0">💭 Mon avis</h3><div id="detailNote" class="note"></div></div>
+  <div class="actions"><button id="detailEdit" class="btn primary">✏️ Modifier la fiche</button><button id="detailFav" class="btn">❤️ Favori</button></div>
+</div></div></div>
 <div id="animeSheet" class="sheet"><div class="modal"><h3 id="animeFormTitle">Ajouter un animé</h3><form id="animeForm" class="form">
 <input id="aid" type="hidden"><input id="amalid" type="hidden"><input id="aimage" type="hidden">
 <label class="sub">Nom de l’animé</label><input id="aname" class="field" placeholder="Ex. Shangri-La Frontier" required autocomplete="off">
@@ -84,7 +99,28 @@ function setView(id){$$('.view').forEach(v=>v.classList.toggle('on',v.id===id));
 window.showAnimeDetail=id=>{const a=anime.find(x=>x.id===id);if(!a)return;let denom=Number(a.seasonEpisodes||0),pct=denom?Math.min(100,Math.round((Number(a.currentEp||0)/denom)*100)):0;$('#animeDetailContent').innerHTML=`<div class="detailHero">${a.image?`<div class="detailBg" style="background-image:url('${esc(a.image)}')"></div>`:''}<div class="detailShade"></div><div class="detailContent">${a.image?`<img class="detailCover" src="${esc(a.image)}">`:`<div class="detailCover" style="display:grid;place-items:center;font-size:44px">🎌</div>`}<div><div class="detailTitle">${esc(a.name)}</div><div class="detailBadges"><span class="badge">⭐ ${Number(a.score||0).toFixed(1)}/10</span><span class="badge">${esc(a.status)}</span>${a.fav?'<span class="badge">❤️ Favori</span>':''}</div></div></div></div><div class="detailGrid"><div class="detailBox"><b>#${anime.indexOf(a)+1}</b><small>Classement</small></div><div class="detailBox"><b>${a.episodes||'—'}</b><small>Épisodes</small></div><div class="detailBox"><b>${a.rewatches||0}×</b><small>Visionnages</small></div></div>${a.status==='En cours'?`<div class="detailSection"><h3>⚡ Progression</h3><div class="detailText">Saison ${a.season||1} • Épisode ${a.currentEp||0}${denom?' / '+denom:''}</div>${denom?`<div class="progress"><div style="width:${pct}%"></div></div><div class="meta">${pct}% de la saison</div>`:''}<div class="actions"><button class="btn" onclick="minusEp(${a.id});showAnimeDetail(${a.id})">− Épisode</button><button class="btn primary" onclick="plusEp(${a.id});showAnimeDetail(${a.id})">+ Épisode</button></div></div>`:''}<div class="detailSection"><h3>🎴 Informations</h3><div class="detailText">${a.year?'📅 '+a.year+'\n':''}${a.genre?'🏷️ '+esc(frenchGenres(a.genre)):''}</div></div>${a.synopsis?`<div class="detailSection"><h3>📖 Synopsis</h3><div class="detailText">${esc(a.synopsis)}</div></div>`:''}${a.note?`<div class="detailSection"><h3>💜 Mon avis</h3><div class="detailText">${esc(a.note)}</div></div>`:''}<div class="detailActions"><button class="btn" onclick="minusWatch(${a.id});showAnimeDetail(${a.id})">➖ 🔁</button><button class="btn" onclick="plusWatch(${a.id});showAnimeDetail(${a.id})">➕ 🔁</button><button class="btn primary" style="grid-column:1/-1" onclick="editAnime(${a.id})">✏️ Modifier la fiche</button></div>`;setView('animeDetail')}
 function preview(imgEl,url){imgEl.src=url||'';imgEl.style.display=url?'block':'none'}
 function updateProgressFields(){const show=$('#astatus').value==='En cours';$('#progressFields').classList.toggle('hidden',!show)}
-function openAnime(a={}){$('#aid').value=a.id||'';$('#amalid').value=a.malId||'';$('#aimage').value=a.image||'';$('#aname').value=a.name||'';$('#ascore').value=a.score??'';$('#astatus').value=a.status||'Vu';$('#aepisodes').value=a.episodes??'';$('#arewatch').value=a.rewatches??'';$('#aseason').value=a.season??1;$('#acurrentep').value=a.currentEp??0;$('#aseasoneps').value=a.seasonEpisodes??'';$('#agenre').value=a.genre||'';$('#ayear').value=a.year??'';$('#asynopsis').value=a.synopsis||'';$('#anote').value=a.note||'';$('#afav').checked=!!a.fav;preview($('#animePreview'),a.image);$('#deleteAnime').style.display=a.id?'inline-block':'none';$('#animeSuggestions').classList.remove('show');updateProgressFields();$('#animeSheet').classList.add('show')}window.editAnime=id=>openAnime(anime.find(a=>a.id===id));
+
+const genreFR={"Action":"Action","Adventure":"Aventure","Comedy":"Comédie","Drama":"Drame","Fantasy":"Fantasy","Romance":"Romance","Sci-Fi":"Science-fiction","Slice of Life":"Tranche de vie","Sports":"Sport","Mystery":"Mystère","Supernatural":"Surnaturel","Horror":"Horreur","Psychological":"Psychologique","Thriller":"Thriller","Mecha":"Mecha","Music":"Musique"};
+function genresFr(v){return String(v||'').split('·').map(x=>x.trim()).filter(Boolean).map(x=>genreFR[x]||x).join(' · ')}
+let detailId=null;
+function openDetail(id){
+  let a=anime.find(x=>x.id===id); if(!a)return; detailId=id;
+  $('#detailTitle').textContent=a.name||'Sans titre';
+  $('#detailCover').src=a.image||'';
+  $('#detailCover').style.display=a.image?'block':'none';
+  $('#detailHero').style.backgroundImage=a.image?`url("${String(a.image).replace(/"/g,'%22')}")`:'linear-gradient(135deg,#27144f,#0d3154)';
+  $('#detailBadges').innerHTML=`⭐ <b>${Number(a.score||0).toFixed(1)}</b> &nbsp; • &nbsp; ${esc(a.status||'—')} &nbsp; • &nbsp; 🏆 #${anime.indexOf(a)+1}<br>${a.episodes||'?'} épisodes${a.year?' · '+a.year:''}<br>${esc(genresFr(a.genre)||'Genres non renseignés')}<br>🔁 ${a.rewatches||0} visionnage${Number(a.rewatches||0)>1?'s':''}${a.fav?' · ❤️ Favori':''}`;
+  $('#detailSynopsis').textContent=a.synopsis||'Aucun synopsis disponible.';
+  $('#detailNote').textContent=a.note||'Aucun avis personnel pour le moment.';
+  let enCours=a.status==='En cours', den=Number(a.seasonEpisodes||a.episodes||0), ep=Number(a.currentEp||0), pct=den?Math.min(100,Math.round(ep/den*100)):0;
+  $('#detailProgressWrap').style.display=enCours?'block':'none';
+  $('#detailProgressLabel').textContent=`📍 Saison ${a.season||1} · Épisode ${ep}${den?' / '+den:''}`;
+  $('#detailProgressBar').style.width=pct+'%';
+  $('#detailFav').textContent=a.fav?'💔 Retirer des favoris':'❤️ Ajouter aux favoris';
+  $('#detailSheet').classList.add('show');
+}
+window.editAnime=id=>openDetail(id);
+function openAnime(a={}){$('#aid').value=a.id||'';$('#amalid').value=a.malId||'';$('#aimage').value=a.image||'';$('#aname').value=a.name||'';$('#ascore').value=a.score??'';$('#astatus').value=a.status||'Vu';$('#aepisodes').value=a.episodes??'';$('#arewatch').value=a.rewatches??'';$('#aseason').value=a.season??1;$('#acurrentep').value=a.currentEp??0;$('#aseasoneps').value=a.seasonEpisodes??'';$('#agenre').value=a.genre||'';$('#ayear').value=a.year??'';$('#asynopsis').value=a.synopsis||'';$('#anote').value=a.note||'';$('#afav').checked=!!a.fav;preview($('#animePreview'),a.image);$('#deleteAnime').style.display=a.id?'inline-block':'none';$('#animeSuggestions').classList.remove('show');updateProgressFields();$('#animeSheet').classList.add('show')}
 function openChar(c={}){$('#cid').value=c.id||'';$('#cimage').value=c.image||'';$('#cname').value=c.name||'';$('#canime').value=c.anime||'';$('#cscore').value=c.score??'';$('#cnote').value=c.note||'';$('#cfav').checked=!!c.fav;preview($('#charPreview'),c.image);$('#deleteChar').style.display=c.id?'inline-block':'none';$('#charSuggestions').classList.remove('show');$('#charSheet').classList.add('show')}window.editChar=id=>openChar(chars.find(c=>c.id===id));
 async function searchAnime(q){
   const box=$('#animeSuggestions');
@@ -116,6 +152,13 @@ function fileToSmallDataURL(file,cb){let r=new FileReader();r.onload=()=>{let im
 $('#aname').addEventListener('input',()=>{clearTimeout(animeTimer);animeTimer=setTimeout(()=>searchAnime($('#aname').value.trim()),450)});$('#cname').addEventListener('input',()=>{clearTimeout(charTimer);charTimer=setTimeout(()=>searchChar($('#cname').value.trim()),450)});
 $('#chooseAnimeImage').onclick=()=>$('#animeImageFile').click();$('#animeImageFile').onchange=e=>{let f=e.target.files[0];if(f)fileToSmallDataURL(f,u=>{$('#aimage').value=u;preview($('#animePreview'),u)})};$('#chooseCharImage').onclick=()=>$('#charImageFile').click();$('#charImageFile').onchange=e=>{let f=e.target.files[0];if(f)fileToSmallDataURL(f,u=>{$('#cimage').value=u;preview($('#charPreview'),u)})};
 $('#astatus').onchange=updateProgressFields;
+
+$('#closeDetail').onclick=()=>$('#detailSheet').classList.remove('show');
+$('#detailEdit').onclick=()=>{let a=anime.find(x=>x.id===detailId);$('#detailSheet').classList.remove('show');if(a)openAnime(a)};
+$('#detailFav').onclick=()=>{let a=anime.find(x=>x.id===detailId);if(!a)return;a.fav=!a.fav;save();render();openDetail(detailId)};
+$('#detailPlusEp').onclick=()=>{if(detailId!=null){plusEp(detailId);openDetail(detailId)}};
+$('#detailMinusEp').onclick=()=>{if(detailId!=null){minusEp(detailId);openDetail(detailId)}};
+
 $('#animeForm').onsubmit=e=>{e.preventDefault();let id=Number($('#aid').value),obj={id:id||Date.now(),malId:Number($('#amalid').value)||null,image:$('#aimage').value,name:$('#aname').value.trim(),score:Number($('#ascore').value)||0,status:$('#astatus').value,episodes:Number($('#aepisodes').value)||0,rewatches:Number($('#arewatch').value)||0,season:Number($('#aseason').value)||1,currentEp:Number($('#acurrentep').value)||0,seasonEpisodes:Number($('#aseasoneps').value)||0,genre:$('#agenre').value.trim(),year:Number($('#ayear').value)||null,synopsis:$('#asynopsis').value.trim(),note:$('#anote').value.trim(),fav:$('#afav').checked};if(id)anime[anime.findIndex(a=>a.id===id)]=obj;else anime.push(obj);save();$('#animeSheet').classList.remove('show');render();toast('Animé enregistré ✨')};
 $('#charForm').onsubmit=e=>{e.preventDefault();let id=Number($('#cid').value),obj={id:id||Date.now(),image:$('#cimage').value,name:$('#cname').value.trim(),anime:$('#canime').value.trim(),score:Number($('#cscore').value)||0,note:$('#cnote').value.trim(),fav:$('#cfav').checked};if(id)chars[chars.findIndex(c=>c.id===id)]=obj;else chars.push(obj);save();$('#charSheet').classList.remove('show');render();toast('Personnage enregistré ✨')};
 $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Supprimer cet animé ?')){anime=anime.filter(a=>a.id!==id);save();$('#animeSheet').classList.remove('show');render()}};$('#deleteChar').onclick=()=>{let id=Number($('#cid').value);if(id&&confirm('Supprimer ce personnage ?')){chars=chars.filter(c=>c.id!==id);save();$('#charSheet').classList.remove('show');render()}};
