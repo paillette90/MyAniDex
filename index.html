@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.9.4 • Character Cards</title>
+<title>MyAniDex V0.9.5 • Data Migration</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -107,7 +107,7 @@ body{background:radial-gradient(circle at 15% 5%,#25104b 0,transparent 28%),radi
 .stat b{display:flex;align-items:center;gap:7px}.stat b svg{width:22px;height:22px}.score{display:flex;align-items:center;gap:4px}.score svg{width:17px;height:17px}
 @media(max-width:600px){.top{padding-top:20px!important;padding-bottom:15px!important}.main{padding-top:6px!important}.mockBanner{padding:17px!important}.hubGrid button{min-height:72px}.hero.miniOverview{padding:8px!important}.anime{min-height:112px}.charcard{padding:10px!important}.bottom{padding-top:5px!important}.nav button{padding-top:5px!important}}
 
-/* V0.9.4 — Character Card RPG */
+/* V0.9.5 — Character Card RPG + migration des doublons */
 .charHero{position:relative;overflow:hidden;min-height:210px;box-shadow:inset 0 0 35px #7c3aed18,0 18px 45px #0005!important}
 .charHero:after{content:"S+";position:absolute;right:-4px;top:-18px;font-size:92px;font-weight:950;color:#a855f70d;transform:rotate(8deg);pointer-events:none}
 .charHeroImg{box-shadow:0 12px 32px #0009,0 0 22px #8b5cf633}
@@ -117,7 +117,7 @@ body{background:radial-gradient(circle at 15% 5%,#25104b 0,transparent 28%),radi
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.9.4 • Character Cards</span></header>
+<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.9.5 • Data Migration</span></header>
 <main class="main">
 <section id="home" class="view on"><div class="mockBanner"><div class="bannerEyebrow">L’AVENTURE CONTINUE…</div><b>Ton univers anime, à ta façon.</b><span>Découvre, classe, partage tes animés et personnages préférés.</span></div><div class="hubGrid"><button onclick="setView('animeView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="4"/><path d="M13 12l7 4-7 4z"/><path d="M11 4l3 3M21 4l-3 3"/></svg><b>Mes Animés</b><small>Ta bibliothèque personnelle</small></button><button onclick="setView('charView')"><svg class="icon cyan" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="5"/><path d="M7 27c1-6 4.5-9 9-9s8 3 9 9"/></svg><b>Mes Personnages</b><small>Tes héros préférés</small></button><button onclick="setView('rankingView')"><svg class="icon gold" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10v5c0 5-2 8-5 8s-5-3-5-8z"/><path d="M11 8H6c0 5 2 7 6 7M21 8h5c0 5-2 7-6 7M16 18v5M11 27h10M13 23h6"/></svg><b>Mes Classements</b><small>Tes tops et tes tiers</small></button><button onclick="setView('favoritesView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S5 20 5 12.5C5 8 10.5 6 16 11c5.5-5 11-3 11 1.5C27 20 16 27 16 27z"/></svg><b>Mes Favoris</b><small>Ce que tu aimes vraiment</small></button><button onclick="setView('statsView')"><svg class="icon cyan" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27V17h5v10M14 27V10h5v17M23 27V5h5v22M4 27h25"/></svg><b>Mes Statistiques</b><small>Ton univers en chiffres</small></button><button onclick="setView('pickView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="5"/><circle cx="11" cy="11" r="1"/><circle cx="21" cy="11" r="1"/><circle cx="16" cy="16" r="1"/><circle cx="11" cy="21" r="1"/><circle cx="21" cy="21" r="1"/></svg><b>Choisis pour moi</b><small>Laisse MyAniDex te surprendre</small></button></div><div class="hero miniOverview"><div class="stats" id="homeStats"></div></div><h3><svg class="icon sm gold headingIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10v5c0 5-2 8-5 8s-5-3-5-8z"/><path d="M11 8H6c0 5 2 7 6 7M21 8h5c0 5-2 7-6 7M16 18v5M11 27h10M13 23h6"/></svg>Ton Top 5</h3><div id="top5" class="list"></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search premiumSearch" placeholder="Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="sub">↑ ↓ changent ton classement. Touche une fiche pour la modifier.</div><div id="animeList" class="list"></div></section>
@@ -202,7 +202,7 @@ let chars=JSON.parse(localStorage.getItem('mad02_chars')||'null')||[{id:1,name:'
 let filter='Tous', animeTimer, charTimer;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-function normKey(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'')}
+function normKey(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'').replace(/ou/g,'o')}
 function mergeDuplicateChars(list){
   const out=[], by=new Map();
   for(const c of list){
@@ -422,7 +422,7 @@ $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Su
 $('#backAnime').onclick=()=>setView('animeView');$('#backChar').onclick=()=>setView('charView');$('#newAnime').onclick=()=>openAnime();$('#newChar').onclick=()=>openChar();$('#cancelAnime').onclick=()=>$('#animeSheet').classList.remove('show');$('#cancelChar').onclick=()=>$('#charSheet').classList.remove('show');$('#search').oninput=renderAnime;$('#charSearch').oninput=renderChars;
 if($('#pickBtn')) $('#pickBtn').onclick=()=>{let pool=anime.filter(a=>a.status!=='Abandonné');if(!pool.length){$('#pickResult').innerHTML='<div class="empty">Ajoute d’abord un animé 🎌</div>';return}let a=pool[Math.floor(Math.random()*pool.length)];$('#pickResult').innerHTML='<div style="margin-top:14px">'+card(a,anime.indexOf(a),false)+'</div>';};
 $$('.nav button').forEach(b=>b.onclick=()=>{setView(b.dataset.view);render()});
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.9.4',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.9.4.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.9.5',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.9.5.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 render();
 </script>
 </body></html>
