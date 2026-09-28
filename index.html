@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.9.5 • Data Migration</title>
+<title>MyAniDex V0.10 • Character Premium</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -114,10 +114,28 @@ body{background:radial-gradient(circle at 15% 5%,#25104b 0,transparent 28%),radi
 .criteriaGrid .criterion{box-shadow:inset 0 0 18px #7c3aed0c}
 .charcard.v06{transition:transform .18s ease,border-color .18s ease}.charcard.v06:active{transform:scale(.985);border-color:#805ad5!important}
 @media(max-width:600px){.charHero{align-items:center}.charHeroImg{width:105px;height:145px}.charHero .detailTitle{font-size:22px}}
+
+/* V0.10 — fiches personnages Premium RPG */
+.charPremium{position:relative;overflow:hidden;border:1px solid #6946c9;border-radius:22px;background:linear-gradient(145deg,#121038,#081329 62%,#071b2b);box-shadow:0 20px 55px #0008,inset 0 0 45px #7c3aed12;margin-bottom:14px}
+.charPremiumBg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(24px) brightness(.22) saturate(1.25);transform:scale(1.18);opacity:.8}
+.charPremiumShade{position:absolute;inset:0;background:linear-gradient(90deg,#090819dd 0%,#091024b8 52%,#071423e8 100%)}
+.charPremiumWatermark{position:absolute;right:-4px;top:-25px;font-size:104px;font-weight:1000;letter-spacing:-8px;color:#c084fc0c;transform:rotate(7deg);pointer-events:none}
+.charPremiumBody{position:relative;display:grid;grid-template-columns:124px 1fr;gap:17px;align-items:center;padding:20px}
+.charPremiumPortrait{width:124px;height:174px;object-fit:cover;border-radius:17px;border:1px solid #9b7cff;box-shadow:0 15px 38px #000a,0 0 24px #8b5cf644;background:#11162f}
+.charPremiumRank{font-size:12px;font-weight:950;letter-spacing:1.2px;color:#c4b5fd;text-transform:uppercase;margin-bottom:5px}
+.charPremiumName{font-size:27px;font-weight:950;line-height:1.03;letter-spacing:-.7px}
+.charPremiumAnime{color:#9ea8cb;margin-top:5px;font-size:13px}
+.charPremiumBadges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.charPremiumBadges .badge{background:#0b1028cc;backdrop-filter:blur(10px)}
+.charPower{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:0 0 12px;padding:13px 15px;border:1px solid #343d78;border-radius:17px;background:linear-gradient(90deg,#11132e,#0b1731)}
+.charPower strong{font-size:21px}.charPower span{font-size:11px;color:#9ea8cb;font-weight:850}.charPowerBar{height:9px;background:#20264e;border-radius:99px;overflow:hidden}.charPowerBar>div{height:100%;background:linear-gradient(90deg,#d946ef,#8b5cf6,#38bdf8);box-shadow:0 0 15px #8b5cf6}
+.criteriaPremium{display:grid;grid-template-columns:1fr 1fr;gap:9px}.criterionPremium{background:linear-gradient(145deg,#0c1129,#091025);border:1px solid #2e376d;border-radius:15px;padding:11px}.criterionTop{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px;font-weight:850}.criterionTop strong{font-size:15px;color:#fff}.criterionPremium .critbar{margin-top:8px;height:8px}.criterionPremium .critbar>div{box-shadow:0 0 12px #8b5cf655}
+.charQuote{position:relative;padding-left:17px!important}.charQuote:before{content:'“';position:absolute;left:7px;top:1px;font-size:34px;color:#a855f755;font-family:serif}
+.charPremiumActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.charPremiumActions .primary{grid-column:1/-1}
+@media(max-width:600px){.charPremiumBody{grid-template-columns:98px 1fr;gap:13px;padding:16px}.charPremiumPortrait{width:98px;height:140px}.charPremiumName{font-size:22px}.charPremiumWatermark{font-size:82px}.criteriaPremium{grid-template-columns:1fr 1fr}.charPower{grid-template-columns:1fr auto}.charPowerBar{grid-column:1/-1;grid-row:2}.charPremiumBadges{gap:5px}.charPremiumBadges .badge{font-size:10px;padding:5px 7px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.9.5 • Data Migration</span></header>
+<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.10 • Character Premium</span></header>
 <main class="main">
 <section id="home" class="view on"><div class="mockBanner"><div class="bannerEyebrow">L’AVENTURE CONTINUE…</div><b>Ton univers anime, à ta façon.</b><span>Découvre, classe, partage tes animés et personnages préférés.</span></div><div class="hubGrid"><button onclick="setView('animeView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="4"/><path d="M13 12l7 4-7 4z"/><path d="M11 4l3 3M21 4l-3 3"/></svg><b>Mes Animés</b><small>Ta bibliothèque personnelle</small></button><button onclick="setView('charView')"><svg class="icon cyan" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="5"/><path d="M7 27c1-6 4.5-9 9-9s8 3 9 9"/></svg><b>Mes Personnages</b><small>Tes héros préférés</small></button><button onclick="setView('rankingView')"><svg class="icon gold" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10v5c0 5-2 8-5 8s-5-3-5-8z"/><path d="M11 8H6c0 5 2 7 6 7M21 8h5c0 5-2 7-6 7M16 18v5M11 27h10M13 23h6"/></svg><b>Mes Classements</b><small>Tes tops et tes tiers</small></button><button onclick="setView('favoritesView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S5 20 5 12.5C5 8 10.5 6 16 11c5.5-5 11-3 11 1.5C27 20 16 27 16 27z"/></svg><b>Mes Favoris</b><small>Ce que tu aimes vraiment</small></button><button onclick="setView('statsView')"><svg class="icon cyan" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27V17h5v10M14 27V10h5v17M23 27V5h5v22M4 27h25"/></svg><b>Mes Statistiques</b><small>Ton univers en chiffres</small></button><button onclick="setView('pickView')"><svg class="icon pink" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="5"/><circle cx="11" cy="11" r="1"/><circle cx="21" cy="11" r="1"/><circle cx="16" cy="16" r="1"/><circle cx="11" cy="21" r="1"/><circle cx="21" cy="21" r="1"/></svg><b>Choisis pour moi</b><small>Laisse MyAniDex te surprendre</small></button></div><div class="hero miniOverview"><div class="stats" id="homeStats"></div></div><h3><svg class="icon sm gold headingIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10v5c0 5-2 8-5 8s-5-3-5-8z"/><path d="M11 8H6c0 5 2 7 6 7M21 8h5c0 5-2 7-6 7M16 18v5M11 27h10M13 23h6"/></svg>Ton Top 5</h3><div id="top5" class="list"></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search premiumSearch" placeholder="Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="sub">↑ ↓ changent ton classement. Touche une fiche pour la modifier.</div><div id="animeList" class="list"></div></section>
@@ -242,87 +260,7 @@ function renderAnime(){let q=$('#search').value.toLowerCase(),arr=anime.filter(a
 function renderChars(){let q=$('#charSearch').value.toLowerCase(),arr=chars.filter(c=>(c.name+' '+(c.anime||'')).toLowerCase().includes(q));$('#charList').innerHTML=arr.length?arr.map(c=>{let i=chars.indexOf(c);return `<div class="charcard v06" onclick="showCharDetail(${c.id})"><div class="charRank">#${i+1}</div>${c.image?`<img class="charimg" src="${esc(c.image)}">`:`<div class="charimg" style="display:grid;place-items:center">👤</div>`}<div><b>${esc(c.name)} ${c.fav?'<span class="heart">♥</span>':''}</b><div class="meta">${esc(c.anime||'Animé non renseigné')}</div><div class="charTierLine">${c.tier?tierBadge(c):''}<span>${svgStar} ${Number(c.score||0).toFixed(1)}/10</span></div></div><div class="actions" onclick="event.stopPropagation()"><button class="mini" onclick="moveChar(${c.id},-1)">↑</button><button class="mini" onclick="moveChar(${c.id},1)">↓</button></div></div>`}).join(''):'<div class="empty">Aucun personnage.</div>'}
 window.moveChar=(id,d)=>{let i=chars.findIndex(c=>c.id===id),j=i+d;if(j<0||j>=chars.length)return;[chars[i],chars[j]]=[chars[j],chars[i]];save();render();toast('Classement personnages mis à jour 🏆')};
 function critBox(icon,label,val){val=Math.max(0,Math.min(10,Number(val||0)));return `<div class="criterion"><b><span>${icon} ${label}</span><span>${val}/10</span></b><div class="critbar"><div style="width:${val*10}%"></div></div></div>`}
-window.showCharDetail=id=>{const c=chars.find(x=>x.id===id);if(!c)return;$('#charDetailContent').innerHTML=`<div class="charHero">${c.image?`<img class="charHeroImg" src="${esc(c.image)}">`:`<div class="charHeroImg" style="display:grid;place-items:center;font-size:44px">👤</div>`}<div><div class="detailTitle">${esc(c.name)}</div><div class="meta">${esc(c.anime||'Animé non renseigné')}</div><div class="detailBadges" style="margin-top:8px"><span class="badge">#${chars.indexOf(c)+1}</span><span class="badge">⭐ ${Number(c.score||0).toFixed(1)}/10</span>${tierBadge(c)}${c.fav?'<span class="badge">❤️ Favori</span>':''}</div></div></div><div class="detailSection"><h3>⚡ Tes critères</h3><div class="criteriaGrid">${critBox('💜','Affection',c.affection)}${critBox('✨','Charisme',c.charisma)}${critBox('⚔️','Badass',c.badass)}${critBox('😂','Humour',c.humor)}${critBox('🧠','Intelligence',c.intelligence)}${critBox('🎨','Design',c.design)}</div></div>${c.note?`<div class="detailSection"><h3>💭 Mon avis</h3><div class="detailText">${esc(c.note)}</div></div>`:''}<button class="btn primary" style="width:100%" onclick="editChar(${c.id})">✏️ Modifier la fiche</button>`;setView('charDetail')};
-window.setFilter=f=>{filter=f;renderAnime()};window.move=(id,d)=>{let i=anime.findIndex(a=>a.id===id),j=i+d;if(j<0||j>=anime.length)return;[anime[i],anime[j]]=[anime[j],anime[i]];save();render();toast('Classement mis à jour 🏆')};window.plusWatch=id=>{let a=anime.find(x=>x.id===id);a.rewatches=(a.rewatches||0)+1;save();render();toast('Visionnage ajouté 🔁')};window.minusWatch=id=>{let a=anime.find(x=>x.id===id);a.rewatches=Math.max(0,(a.rewatches||0)-1);save();render()};window.plusEp=id=>{let a=anime.find(x=>x.id===id);a.currentEp=(a.currentEp||0)+1;if(a.seasonEpisodes&&a.currentEp>a.seasonEpisodes){a.season=(a.season||1)+1;a.currentEp=1}save();render();toast('Épisode suivant ⚡')};window.minusEp=id=>{let a=anime.find(x=>x.id===id);a.currentEp=Math.max(0,(a.currentEp||0)-1);save();render()};
-const genreFR={'Action':'Action','Adventure':'Aventure','Comedy':'Comédie','Drama':'Drame','Fantasy':'Fantasy','Sci-Fi':'Science-fiction','Romance':'Romance','Sports':'Sport','Mystery':'Mystère','Horror':'Horreur','Psychological':'Psychologique','Supernatural':'Surnaturel','Thriller':'Thriller','Slice of Life':'Tranche de vie','Music':'Musique','Mecha':'Mecha'};
-function frenchGenres(g){return String(g||'').split(' · ').map(x=>genreFR[x]||x).join(' · ')}
-function setView(id){$$('.view').forEach(v=>v.classList.toggle('on',v.id===id));$$('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'})}
-
-async function translateInlineFR(text){
-  const clean=String(text||'').trim();
-  if(!clean) return '';
-  const chunks=[]; let rest=clean;
-  while(rest.length){
-    if(rest.length<=450){chunks.push(rest);break}
-    let cut=Math.max(rest.lastIndexOf('. ',450),rest.lastIndexOf('! ',450),rest.lastIndexOf('? ',450));
-    if(cut<220) cut=rest.lastIndexOf(' ',450);
-    if(cut<100) cut=450;
-    chunks.push(rest.slice(0,cut+1).trim()); rest=rest.slice(cut+1).trim();
-  }
-  const out=[];
-  for(const part of chunks){
-    const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(part)+'&langpair=en|fr');
-    if(!r.ok) throw new Error('translation');
-    const d=await r.json();
-    const t=d?.responseData?.translatedText;
-    if(!t) throw new Error('translation');
-    out.push(t);
-  }
-  return out.join(' ');
-}
-window.refreshFrenchSynopsis=async id=>{
-  const a=anime.find(x=>x.id===id); if(!a)return;
-  const unavailable='Synopsis français indisponible pour le moment.';
-  let original=String(a.synopsisOriginal||a.synopsis||'').trim();
-
-  // Repair the bad placeholder saved by V0.5.4 when possible.
-  if(String(a.synopsis||'').trim()===unavailable){
-    if(a.synopsisOriginal){
-      a.synopsis=a.synopsisOriginal;
-      original=a.synopsisOriginal;
-      save(); render(); showAnimeDetail(id);
-    }else{
-      try{
-        const r=await fetch('https://graphql.anilist.co',{
-          method:'POST',
-          headers:{'Content-Type':'application/json','Accept':'application/json'},
-          body:JSON.stringify({
-            query:`query ($search:String){Page(page:1,perPage:5){media(search:$search,type:ANIME,sort:SEARCH_MATCH){title{romaji english}description(asHtml:false)}}}`,
-            variables:{search:a.name}
-          })
-        });
-        if(r.ok){
-          const d=await r.json();
-          const hit=d?.data?.Page?.media?.[0];
-          const recovered=stripHtml(hit?.description||'').trim();
-          if(recovered){a.synopsis=recovered;a.synopsisOriginal=recovered;original=recovered;save()}
-        }
-      }catch(e){}
-    }
-  }
-
-  if(!original || original===unavailable){
-    alert("Aucun synopsis original n’est disponible à traduire. Ouvre « Modifier la fiche » pour en ajouter un.");
-    return;
-  }
-
-  try{
-    toast('Traduction en français… 🇫🇷');
-    const fr=await translateInlineFR(original);
-    if(!fr || fr.trim()===original.trim()) throw new Error('no translation');
-    if(!a.synopsisOriginal) a.synopsisOriginal=original;
-    a.synopsis=fr.trim();
-    a.synopsisTranslated=true;
-    save(); render(); showAnimeDetail(id);
-    toast('Synopsis traduit dans MyAniDex 🇫🇷');
-  }catch(e){
-    // Absolute rule: a failed translation must never overwrite the synopsis.
-    if(a.synopsisOriginal && (!a.synopsis || a.synopsis===unavailable)) a.synopsis=a.synopsisOriginal;
-    save(); render(); showAnimeDetail(id);
-    alert("La traduction n’est pas disponible pour le moment. Le synopsis original a été conservé.");
-  }
-};
-window.showAnimeDetail=id=>{const a=anime.find(x=>x.id===id);if(!a)return;let denom=Number(a.seasonEpisodes||a.episodes||0),pct=denom?Math.min(100,Math.round((Number(a.currentEp||0)/denom)*100)):0;$('#animeDetailContent').innerHTML=`<div class="detailHero">${a.image?`<div class="detailBg" style="background-image:url('${esc(a.image)}')"></div>`:''}<div class="detailShade"></div><div class="detailContent">${a.image?`<img class="detailCover" src="${esc(a.image)}">`:`<div class="detailCover" style="display:grid;place-items:center;font-size:44px">🎌</div>`}<div><div class="detailTitle">${esc(a.name)}</div><div class="detailBadges"><span class="badge">⭐ ${Number(a.score||0).toFixed(1)}/10</span>${tierBadge(a)}<span class="badge">${esc(a.status)}</span>${a.fav?'<span class="badge">❤️ Favori</span>':''}</div></div></div></div><div class="detailGrid"><div class="detailBox"><b>#${anime.indexOf(a)+1}</b><small>Classement</small></div><div class="detailBox"><b>${a.seasons||1}</b><small>Saison${Number(a.seasons||1)>1?'s':''}</small></div><div class="detailBox"><b>${a.episodes||'—'}</b><small>Épisodes</small></div></div>${a.status==='En cours'?`<div class="detailSection"><h3>⚡ Progression</h3><div class="seasonCard"><div class="seasonLine"><b>Saison ${a.season||1}</b><span>Épisode ${a.currentEp||0}${denom?' / '+denom:''}</span></div>${denom?`<div class="progress"><div style="width:${pct}%"></div></div><div class="meta">${pct}% terminé</div>`:''}<div class="actions"><button class="btn" onclick="minusEp(${a.id});showAnimeDetail(${a.id})">− Épisode</button><button class="btn primary" onclick="plusEp(${a.id});showAnimeDetail(${a.id})">+ Épisode</button></div></div></div>`:''}<div class="detailSection"><h3>🎴 Informations</h3><div class="detailText">${a.year?'📅 '+a.year+' · ':''}${a.genre?'🏷️ '+esc(frenchGenres(a.genre)):''}</div></div>${a.synopsis?`<div class="detailSection"><h3>📖 Synopsis</h3><div class="detailText">${esc(a.synopsis)}</div><div class="actions"><button class="mini" onclick="refreshFrenchSynopsis(${a.id})">🇫🇷 Synopsis français / traduction</button></div></div>`:''}${a.note?`<div class="detailSection"><h3>💜 Mon avis</h3><div class="detailText">${esc(a.note)}</div></div>`:''}<div class="detailSection"><h3><svg class="icon sm cyan headingIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M25 11l-4-4-4 4"/><path d="M21 7H11a6 6 0 0 0-6 6"/><path d="M7 21l4 4 4-4"/><path d="M11 25h10a6 6 0 0 0 6-6"/></svg>Revisionnages</h3><div class="watchControl"><button class="btn" onclick="minusWatch(${a.id});showAnimeDetail(${a.id})">−</button><div class="watchCount">${a.rewatches||0}×<small>nombre de visionnages</small></div><button class="btn primary" onclick="plusWatch(${a.id});showAnimeDetail(${a.id})">+</button></div></div><div class="detailActions"><button class="btn primary" style="grid-column:1/-1" onclick="editAnime(${a.id})">✏️ Modifier la fiche</button></div>`;setView('animeDetail')}
+window.showCharDetail=id=>{const c=chars.find(x=>x.id===id);if(!c)return;const vals=[c.affection,c.charisma,c.badass,c.humor,c.intelligence,c.design].map(v=>Number(v||0));const power=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;const pct=Math.max(0,Math.min(100,power*10));const criterion=(icon,label,val)=>`<div class="criterionPremium"><div class="criterionTop"><span>${icon} ${label}</span><strong>${Number(val||0)}/10</strong></div><div class="critbar"><div style="width:${Math.max(0,Math.min(100,Number(val||0)*10))}%"></div></div></div>`;$('#charDetailContent').innerHTML=`<div class="charPremium">${c.image?`<div class="charPremiumBg" style="background-image:url('${esc(c.image)}')"></div>`:''}<div class="charPremiumShade"></div><div class="charPremiumWatermark">${esc(c.tier||'★')}</div><div class="charPremiumBody">${c.image?`<img class="charPremiumPortrait" src="${esc(c.image)}" alt="">`:`<div class="charPremiumPortrait" style="display:grid;place-items:center;font-size:42px">👤</div>`}<div><div class="charPremiumRank">Personnage #${chars.indexOf(c)+1}</div><div class="charPremiumName">${esc(c.name)} ${c.fav?'<span class="heart">♥</span>':''}</div><div class="charPremiumAnime">${esc(c.anime||'Animé non renseigné')}</div><div class="charPremiumBadges"><span class="badge">${svgStar} ${Number(c.score||0).toFixed(1)}/10</span>${tierBadge(c)}${c.fav?'<span class="badge">❤️ Favori</span>':''}</div></div></div></div><div class="charPower"><div><span>SCORE DES CRITÈRES</span><strong>${power.toFixed(1)}/10</strong></div><div class="charPowerBar"><div style="width:${pct}%"></div></div><div class="tier ${tierClass(c.tier||'')}">${esc(c.tier||'—')}</div></div><div class="detailSection"><h3>⚡ Profil personnel</h3><div class="criteriaPremium">${criterion('💜','Affection',c.affection)}${criterion('✨','Charisme',c.charisma)}${criterion('⚔️','Badass',c.badass)}${criterion('😂','Humour',c.humor)}${criterion('🧠','Intelligence',c.intelligence)}${criterion('🎨','Design',c.design)}</div></div>${c.note?`<div class="detailSection charQuote"><h3>💭 Mon avis</h3><div class="detailText">${esc(c.note)}</div></div>`:''}<div class="charPremiumActions"><button class="btn" onclick="moveChar(${c.id},-1);showCharDetail(${c.id})">↑ Monter</button><button class="btn" onclick="moveChar(${c.id},1);showCharDetail(${c.id})">↓ Descendre</button><button class="btn primary" onclick="editChar(${c.id})">✏️ Modifier la fiche</button></div>`;setView('charDetail')};
 function preview(imgEl,url){imgEl.src=url||'';imgEl.style.display=url?'block':'none'}
 function updateProgressFields(){const show=$('#astatus').value==='En cours';$('#progressFields').classList.toggle('hidden',!show)}
 
@@ -422,7 +360,7 @@ $('#deleteAnime').onclick=()=>{let id=Number($('#aid').value);if(id&&confirm('Su
 $('#backAnime').onclick=()=>setView('animeView');$('#backChar').onclick=()=>setView('charView');$('#newAnime').onclick=()=>openAnime();$('#newChar').onclick=()=>openChar();$('#cancelAnime').onclick=()=>$('#animeSheet').classList.remove('show');$('#cancelChar').onclick=()=>$('#charSheet').classList.remove('show');$('#search').oninput=renderAnime;$('#charSearch').oninput=renderChars;
 if($('#pickBtn')) $('#pickBtn').onclick=()=>{let pool=anime.filter(a=>a.status!=='Abandonné');if(!pool.length){$('#pickResult').innerHTML='<div class="empty">Ajoute d’abord un animé 🎌</div>';return}let a=pool[Math.floor(Math.random()*pool.length)];$('#pickResult').innerHTML='<div style="margin-top:14px">'+card(a,anime.indexOf(a),false)+'</div>';};
 $$('.nav button').forEach(b=>b.onclick=()=>{setView(b.dataset.view);render()});
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.9.5',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.9.5.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.10',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.10.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 render();
 </script>
 </body></html>
