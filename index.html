@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.15 • Dashboard</title>
+<title>MyAniDex V0.15.1 • Dashboard Polish</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -160,12 +160,68 @@ body{background:radial-gradient(circle at 15% 5%,#25104b 0,transparent 28%),radi
 
 /* V0.15 — Dashboard */
 .dash15{display:grid;gap:12px}.dashHead15{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:4px 0 2px}.dashHead15 h2{margin:0;font-size:23px}.dashHead15 p{margin:4px 0 0;color:var(--muted);font-size:12px}.dashSection15{border:1px solid #2b376d;border-radius:19px;background:linear-gradient(145deg,#0b122b,#080d20);padding:14px}.dashTitle15{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.dashTitle15 h3{margin:0;font-size:16px}.dashLink15{border:0;background:transparent;color:#bca7ff;font-weight:850;font-size:11px;padding:6px}.ongoing15{display:grid;grid-template-columns:66px 1fr;gap:11px;align-items:center;padding:10px;border:1px solid #303a72;border-radius:15px;background:#080e23;margin-top:8px}.ongoing15 img,.ongoingPh15{width:66px;height:92px;object-fit:cover;border-radius:10px;background:#171d42;display:grid;place-items:center}.ongoing15 h4{margin:0 0 4px;font-size:15px}.ongoing15 .progress{margin:8px 0 5px}.ongoingActions15{display:flex;gap:7px;margin-top:8px}.ongoingActions15 button{padding:8px 10px;font-size:11px}.dashKpi15{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dashKpi15>div{padding:11px 8px;text-align:center;border:1px solid #293568;border-radius:14px;background:#080e23}.dashKpi15 strong{display:block;font-size:20px}.dashKpi15 span{display:block;color:#929dc1;font-size:10px;margin-top:2px}.dashTop15{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.dashTopItem15{min-width:0;text-align:center;cursor:pointer}.dashTopItem15 img,.dashTopPh15{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;background:#171d42;display:grid;place-items:center;border:1px solid #303a72}.dashTopItem15 b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px}.dashTopItem15 small{font-size:9px;color:#a9b1d1}.dashFav15{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.dashFav15>button{flex:0 0 auto;display:flex;align-items:center;gap:7px;border:1px solid #303a72;border-radius:999px;background:#0b1129;color:#fff;padding:7px 10px}.dashFav15 img{width:28px;height:28px;border-radius:50%;object-fit:cover}.vip15{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;padding:12px;border:1px solid #7547cc;border-radius:17px;background:linear-gradient(120deg,#1a0e3c,#0b1731);box-shadow:inset 0 0 24px #a855f711}.vip15 img,.vipPh15{width:72px;height:96px;object-fit:cover;border-radius:12px;background:#171d42;display:grid;place-items:center}.vip15 .eyebrow{font-size:9px;letter-spacing:1.2px;color:#d8b4fe;font-weight:900}.vip15 h3{margin:4px 0;font-size:19px}.vip15 p{margin:0;color:#9ba6c7;font-size:11px}@media(max-width:600px){.dashKpi15{grid-template-columns:repeat(2,1fr)}.dashTop15{gap:5px}.dashSection15{padding:12px}}
+
+/* V0.15.1 — Dashboard Polish mobile */
+.hubGrid151 button{
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  grid-template-rows:1fr!important;
+  column-gap:10px!important;
+  align-items:center!important;
+  min-width:0;
+}
+.hubIcon151{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  font-size:24px;
+  line-height:1;
+  flex:none;
+}
+.hubText151{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  gap:3px;
+}
+.hubText151 b{
+  display:block;
+  font-size:13px!important;
+  line-height:1.15;
+  white-space:normal;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+.hubText151 small{
+  display:block;
+  font-size:10px!important;
+  line-height:1.3;
+  color:#8792b9;
+  white-space:normal;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+@media(max-width:600px){
+  .hubGrid151{gap:9px!important}
+  .hubGrid151 button{
+    min-height:86px!important;
+    padding:11px 9px!important;
+    grid-template-columns:36px minmax(0,1fr)!important;
+    column-gap:8px!important;
+  }
+  .hubIcon151{width:36px;height:36px;font-size:22px}
+  .hubText151 b{font-size:12px!important}
+  .hubText151 small{font-size:9.5px!important}
+}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.15 • Dashboard</span></header>
+<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.15.1 • Dashboard Polish</span></header>
 <main class="main">
-<section id="home" class="view on"><div class="mockBanner"><div class="bannerEyebrow">TABLEAU DE BORD • MYANIDEX</div><b>Ton univers anime, en un coup d’œil.</b><span>Reprends tes épisodes, retrouve ton top et garde tes coups de cœur sous la main.</span></div><div id="dashboard15" class="dash15"></div><div class="hubGrid"><button onclick="setView('animeView')">🎌<b>Mes Animés</b><small>Bibliothèque & filtres</small></button><button onclick="setView('charView')">⚡<b>Mes Personnages</b><small>Tes héros préférés</small></button><button onclick="setView('rankingView')">🏆<b>Classements</b><small>Ton ordre personnel</small></button><button onclick="setView('statsView')">📊<b>Statistiques</b><small>Tout ton univers en chiffres</small></button></div></section>
+<section id="home" class="view on"><div class="mockBanner"><div class="bannerEyebrow">TABLEAU DE BORD • MYANIDEX</div><b>Ton univers anime, en un coup d’œil.</b><span>Reprends tes épisodes, retrouve ton top et garde tes coups de cœur sous la main.</span></div><div id="dashboard15" class="dash15"></div><div class="hubGrid hubGrid151"><button onclick="setView('animeView')"><span class="hubIcon151">🎌</span><span class="hubText151"><b>Mes Animés</b><small>Bibliothèque & filtres</small></span></button><button onclick="setView('charView')"><span class="hubIcon151">⚡</span><span class="hubText151"><b>Mes Personnages</b><small>Tes héros préférés</small></span></button><button onclick="setView('rankingView')"><span class="hubIcon151">🏆</span><span class="hubText151"><b>Classements</b><small>Ton ordre personnel</small></span></button><button onclick="setView('statsView')"><span class="hubIcon151">📊</span><span class="hubText151"><b>Statistiques</b><small>Tout ton univers en chiffres</small></span></button></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search premiumSearch" placeholder="Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="advancedFilters14"><div class="filterHead14"><b>⚙️ Filtres & tris</b><button class="btn" id="resetFilters14">Réinitialiser</button></div><div class="filterGrid14"><select id="tierFilter14" class="select14" aria-label="Filtrer par tier"><option value="Tous">🏆 Tous les tiers</option></select><select id="genreFilter14" class="select14" aria-label="Filtrer par genre"><option value="Tous">🏷️ Tous les genres</option></select><select id="yearFilter14" class="select14" aria-label="Filtrer par année"><option value="Tous">📅 Toutes les années</option></select><select id="sortAnime14" class="select14" aria-label="Trier les animés"><option value="manual">↕️ Classement perso</option><option value="scoreDesc">⭐ Note ↓</option><option value="scoreAsc">⭐ Note ↑</option><option value="titleAsc">🔤 Titre A–Z</option><option value="yearDesc">📅 Plus récents</option><option value="yearAsc">📅 Plus anciens</option><option value="rewatchesDesc">🔁 Plus visionnés</option></select><button id="favFilter14" class="fav14">♡ Favoris seulement</button></div><div id="filterCount14" class="filterCount14"></div></div><div class="sub">↑ ↓ changent ton classement. Les tris n’altèrent pas ton classement personnel.</div><div id="animeList" class="list"></div></section>
 <section id="animeDetail" class="view"><button id="backAnime" class="btn backBtn">← Retour aux animés</button><div id="animeDetailContent"></div></section>
 <section id="charView" class="view"><div class="toolbar"><input id="charSearch" class="search premiumSearch" placeholder="Rechercher un personnage"><button id="newChar" class="btn primary">＋ Ajouter</button></div><div class="sub">↑ ↓ changent ton classement des personnages. Touche une fiche pour l’ouvrir.</div><div id="charList"></div></section><section id="charDetail" class="view"><button id="backChar" class="btn backBtn">← Retour aux personnages</button><div id="charDetailContent"></div></section>
@@ -716,7 +772,7 @@ async function repairMissingCharacterImages(){
   }
   if(changed){save();render();toast('Portrait personnage restauré ✨')}
 }
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.15',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.15.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.15.1',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.15.1.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 save();render();repairMissingCharacterImages();
 </script>
 </body></html>
