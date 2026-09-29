@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070817">
-<title>MyAniDex V0.15.1 • Dashboard Polish</title>
+<title>MyAniDex V0.16 • PWA</title>
 <style>
 :root{--bg:#060713;--card:#0e1127;--card2:#151936;--line:#292e61;--txt:#f8f7ff;--muted:#a9afd4;--p:#8b5cf6;--b:#38bdf8;--pink:#ec4899;--good:#34d399}
 *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 15% -5%,#341566 0,transparent 28%),radial-gradient(circle at 95% 10%,#073d68 0,transparent 27%),var(--bg);min-height:100vh;padding-bottom:118px}
@@ -217,9 +217,18 @@ body{background:radial-gradient(circle at 15% 5%,#25104b 0,transparent 28%),radi
 }
 
 </style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#090b1b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MyAniDex">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
 </head>
 <body>
-<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.15.1 • Dashboard Polish</span></header>
+<header class="top"><div class="brand"><svg class="icon brandIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7.5c4.3-.7 7.6.3 10 2.5v15c-2.4-2.2-5.7-3.2-10-2.5z"/><path d="M26 7.5c-4.3-.7-7.6.3-10 2.5v15c2.4-2.2 5.7-3.2 10-2.5z"/><path d="M16 5v20M16 10l3-3M16 10l-3-3"/><path d="M16 3v7"/></svg><span>MyAniDex</span></div><div class="sub">Ta collection. Ton classement. Ton univers.</div><span class="version">V0.16 • PWA</span></header>
 <main class="main">
 <section id="home" class="view on"><div class="mockBanner"><div class="bannerEyebrow">TABLEAU DE BORD • MYANIDEX</div><b>Ton univers anime, en un coup d’œil.</b><span>Reprends tes épisodes, retrouve ton top et garde tes coups de cœur sous la main.</span></div><div id="dashboard15" class="dash15"></div><div class="hubGrid hubGrid151"><button onclick="setView('animeView')"><span class="hubIcon151">🎌</span><span class="hubText151"><b>Mes Animés</b><small>Bibliothèque & filtres</small></span></button><button onclick="setView('charView')"><span class="hubIcon151">⚡</span><span class="hubText151"><b>Mes Personnages</b><small>Tes héros préférés</small></span></button><button onclick="setView('rankingView')"><span class="hubIcon151">🏆</span><span class="hubText151"><b>Classements</b><small>Ton ordre personnel</small></span></button><button onclick="setView('statsView')"><span class="hubIcon151">📊</span><span class="hubText151"><b>Statistiques</b><small>Tout ton univers en chiffres</small></span></button></div></section>
 <section id="animeView" class="view"><div class="toolbar"><input id="search" class="search premiumSearch" placeholder="Rechercher dans ma collection"><button id="newAnime" class="btn primary">＋ Ajouter</button></div><div class="filters" id="filters"></div><div class="advancedFilters14"><div class="filterHead14"><b>⚙️ Filtres & tris</b><button class="btn" id="resetFilters14">Réinitialiser</button></div><div class="filterGrid14"><select id="tierFilter14" class="select14" aria-label="Filtrer par tier"><option value="Tous">🏆 Tous les tiers</option></select><select id="genreFilter14" class="select14" aria-label="Filtrer par genre"><option value="Tous">🏷️ Tous les genres</option></select><select id="yearFilter14" class="select14" aria-label="Filtrer par année"><option value="Tous">📅 Toutes les années</option></select><select id="sortAnime14" class="select14" aria-label="Trier les animés"><option value="manual">↕️ Classement perso</option><option value="scoreDesc">⭐ Note ↓</option><option value="scoreAsc">⭐ Note ↑</option><option value="titleAsc">🔤 Titre A–Z</option><option value="yearDesc">📅 Plus récents</option><option value="yearAsc">📅 Plus anciens</option><option value="rewatchesDesc">🔁 Plus visionnés</option></select><button id="favFilter14" class="fav14">♡ Favoris seulement</button></div><div id="filterCount14" class="filterCount14"></div></div><div class="sub">↑ ↓ changent ton classement. Les tris n’altèrent pas ton classement personnel.</div><div id="animeList" class="list"></div></section>
@@ -772,7 +781,16 @@ async function repairMissingCharacterImages(){
   }
   if(changed){save();render();toast('Portrait personnage restauré ✨')}
 }
-$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.15.1',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.15.1.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:'0.16',anime,chars},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='MyAniDex-sauvegarde-V0.16.json';a.click();URL.revokeObjectURL(u)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.anime)&&Array.isArray(d.chars)){anime=d.anime;chars=d.chars;save();render();toast('Sauvegarde importée 💾')}else throw 0}catch{alert('Fichier MyAniDex invalide.')}};r.readAsText(f)};
 save();render();repairMissingCharacterImages();
 </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('MyAniDex SW:', err));
+  });
+}
+</script>
+
 </body></html>
